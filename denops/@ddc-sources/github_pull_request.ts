@@ -23,12 +23,12 @@ export class Source extends BaseSource<Params> {
     });
   }
 
-  async gather(args: GatherArguments<Params>): Promise<Item[]> {
-    return this.pullRequests.map((i) => ({
+  gather(args: GatherArguments<Params>): Promise<Item[]> {
+    return Promise.resolve(this.pullRequests.map((i) => ({
       word: `#${i.number}`,
       menu: i[args.sourceParams.menuItem].replaceAll("\r\n", "\n"),
       info: i[args.sourceParams.infoItem].replaceAll("\r\n", "\n"),
-    }));
+    })));
   }
 
   params(): Params {
