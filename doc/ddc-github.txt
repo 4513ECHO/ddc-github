@@ -1,0 +1,128 @@
+*ddc-github.txt*			GitHub completion for ddc.vim via gh
+
+Author: Hibiki <4513echo@gmail.com>
+License: MIT License
+URL: https://github.com/4513ECHO/ddc-github
+Last change: 2022 Apr 23
+
+==============================================================================
+CONTENTS					*ddc-github-contents*
+
+Introduction					|ddc-github-introduction|
+Install						|ddc-github-install|
+Examples					|ddc-github-examples|
+Params						|ddc-github-params|
+  github_issue					|ddc-github_issue-params|
+  github_pull_request				|ddc-github_pull_request-params|
+About						|ddc-github-about|
+
+==============================================================================
+INTRODUCTION					*ddc-github-introduction*
+
+These sources collect something related to GitHub (e.g. issues, pull requests)
+via gh, which is GitHub’s official command line tool.
+
+Now *ddc-github* provides below sources:
+
+github_issue					*ddc-github_issue*
+github_pull_request				*ddc-github_pull_request*
+
+==============================================================================
+INSTALL						*ddc-github-install*
+
+Please install "gh", "|ddc|.vim" and "|denops.vim|".
+
+https://github.com/cli/cli (gh)
+https://github.com/Shougo/ddc.vim
+https://github.com/vim-denops/denops.vim
+
+==============================================================================
+EXAMPLES					*ddc-github-examples*
+
+>
+	" Use github sources
+	call ddc#custom#patch_global('sources', ['github_issue', 'github_pull_request'])
+	
+	" Change source options
+	call ddc#custom#patch_global('souceOptions', {
+	      \ 'github_issue': {
+	      \   'mark': 'issue',
+	      \   'forceCompletionPattern': '#\d*',
+	      \ },
+	      \ })
+	
+	" Use on specific filetype
+	call ddc#custom#patch_filetype(['gitcommit'], {
+	      \ 'sources': ['github_issue', 'github_pull_request'],
+	      \ 'keywordPattern': '[a-zA-Z_:#]\k*',
+	      \ })
+	
+	" Use on `gh (issue|pr) create` buffer
+	function! s:on_gh() abort
+	  " Check whether the file is gh's buffer
+	  let tmpdir = empty($TMPDIR) ? '/tmp' : expand('$TMPDIR')
+	  if fnamemodify(bufname(), ':h') != tmpdir || getcwd() == tmpdir
+	    return
+	  endif
+	  " Over sources
+	  call ddc#custom#patch_buffer({
+	        \ 'sources': ['github_issue', 'github_pull_request'],
+	        \ 'keywordPattern': '[a-zA-Z_:#]\k*',
+	        \ })
+	  inoremap <silent><expr><buffer> <C-x><C-g>
+	        \ ddc#map#manual_complete('github_issue', 'github_pull_request')
+	endfunction
+	autocmd FileType markdown call <SID>on_gh()
+<
+
+==============================================================================
+PARAMS						*ddc-github-params*
+
+------------------------------------------------------------------------------
+GITHUB_ISSUE					*ddc-github_issue-params*
+
+state		"all" | "closed" | "open" (default: "all")
+	Filter of issue state.
+
+menuItem	"state" | "title" | "body" (default: "title")
+	Displayed item in |ddc-item-attribute-menu|. Following values are
+	available:
+
+	value		description~
+	"state"		issue state
+	"title"		issue title
+	"body"		issue doby
+
+infoItem	"state" | "title" | "body" (default: "body")
+	Displayed item in |ddc-item-attribute-info|. Following values are same
+	as `menuItem`.
+
+------------------------------------------------------------------------------
+GITHUB_PULL_REQUEST				*ddc-github_pull_request-params*
+
+state		"all" | "closed" | "merged" | "open" (default: "all")
+	Filter of pull request state.
+
+menuItem	"state" | "title" | "body" (default: "title")
+	Displayed item in |ddc-item-attribute-menu|. Following values are
+	available:
+
+	value		description~
+	"state"		pull request state
+	"title"		pull request title
+	"body"		pull request doby
+
+infoItem	"state" | "title" | "body" (default: "body")
+	Displayed item in |ddc-item-attribute-info|. Following values are same
+	as `menuItem`.
+
+==============================================================================
+ABOUT						*ddc-github-about*
+
+|ddc-github| is developed by Hibiki(4513ECHO) and licensed under the
+MIT License. Visit the project page for the latest version:
+
+	https://github.com/4513ECHO/ddc-github
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl:noet:fen:
