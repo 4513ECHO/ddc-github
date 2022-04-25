@@ -16,7 +16,7 @@ Please read [help](doc/ddc-github.txt) for details.
 
 - [gh](https://github.com/cli/cli)
 - [denops.vim](https://github.com/vim-denops/denops.vim)
-- [ddc.vim](https://github.com/Shoguo/ddc.vim)
+- [ddc.vim](https://github.com/Shougo/ddc.vim)
 
 ## Configuration
 
