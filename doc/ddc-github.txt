@@ -1,9 +1,9 @@
 *ddc-github.txt*			GitHub completion for ddc.vim via gh
 
-Author: Hibiki <4513echo@gmail.com>
+Author: Hibiki <mail@4513echo.dev>
 License: MIT License
 URL: https://github.com/4513ECHO/ddc-github
-Last change: 2022 Apr 23
+Last change: 2023 May 16
 
 ==============================================================================
 CONTENTS					*ddc-github-contents*
